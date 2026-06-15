@@ -1,0 +1,71 @@
+/**
+ * Echo — Design Tokens
+ * -----------------------------------------------------------------------
+ * Deep purple / electric blue cybernetic palette. Every color used
+ * elsewhere in the app is derived from these variables — no inline hex
+ * values outside this file (with the exception of orb/diagram canvas
+ * rendering, which is driven by config.js for JS-side parity).
+ */
+
+:root {
+  /* ---- Surfaces ---- */
+  --void-0: #03040c;
+  --void-1: #06081a;
+  --void-2: #0a0e26;
+  --void-3: #10153a;
+
+  /* ---- Glass ---- */
+  --glass-bg: rgba(18, 22, 48, 0.46);
+  --glass-bg-strong: rgba(24, 28, 60, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-strong: rgba(255, 255, 255, 0.16);
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+
+  /* ---- Accent spectrum ---- */
+  --violet-300: #c4b5fd;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
+  --violet-600: #7c3aed;
+  --violet-700: #6d28d9;
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --cyan-300: #67e8f9;
+  --cyan-400: #22d3ee;
+  --pink-400: #f472b6;
+
+  /* ---- Status (neon-tinted, not flat) ---- */
+  --status-online: #34f5b0;
+  --status-thinking: #67e8f9;
+  --status-executing: #f472b6;
+  --status-offline: #fb7185;
+  --status-demo: #fbbf24;
+
+  /* ---- Text ---- */
+  --text-primary: #eef0ff;
+  --text-secondary: #aab0d6;
+  --text-dim: #6b7299;
+  --text-faint: #4a4f73;
+
+  /* ---- Typography ---- */
+  --font-display: 'Sora', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace;
+
+  /* ---- Radii ---- */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* ---- Shadows / glows ---- */
+  --shadow-panel: 0 18px 60px -20px rgba(10, 6, 40, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  --glow-violet: 0 0 32px rgba(139, 92, 246, 0.35);
+  --glow-blue: 0 0 32px rgba(59, 130, 246, 0.35);
+
+  /* ---- Layout ---- */
+  --gap: 18px;
+  --header-height: 72px;
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echo — OpenJarvis Command Deck</title>
+  <meta name="description" content="Echo (Electronic Cognitive Holographic Origin) — a liquid-glass visual command deck for a local OpenJarvis instance." />
+  <link rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
+
+  <!-- Typography: Sora (display), Inter (body/UI), JetBrains Mono (telemetry / console) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet (Dynamic Maps Frame) — OpenStreetMap tiles, no API key required -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+
+  <link rel="stylesheet" href="./src/styles/tokens.css" />
+  <link rel="stylesheet" href="./src/styles/base.css" />
+  <link rel="stylesheet" href="./src/styles/layout.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/orb.css" />
+  <link rel="stylesheet" href="./src/styles/console.css" />
+  <link rel="stylesheet" href="./src/styles/animations.css" />
+</head>
+<body>
+  <div class="bg-field" aria-hidden="true">
+    <div class="bg-glow bg-glow-a"></div>
+    <div class="bg-glow bg-glow-b"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ============================== HEADER ============================== -->
+    <header class="app-header glass-panel">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="34" height="34">
+            <defs>
+              <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#3b82f6" />
+              </linearGradient>
+            </defs>
+            <circle cx="24" cy="24" r="21" fill="none" stroke="url(#brandGrad)" stroke-width="2.5" opacity="0.55" />
+            <circle cx="24" cy="24" r="13" fill="none" stroke="url(#brandGrad)" stroke-width="2.5" />
+            <circle cx="24" cy="24" r="3.5" fill="url(#brandGrad)" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">ECHO</span>
+          <span class="brand-sub">Electronic Cognitive Holographic Origin</span>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div class="header-clock" data-clock-root>
+          <span class="mono"><span data-clock="hours">--</span>:<span data-clock="minutes">--</span>:<span data-clock="seconds">--</span></span>
+          <span class="header-meridiem" data-clock="meridiem">--</span>
+        </div>
+        <button class="connection-pill" type="button" data-hud="dot" data-action="open-settings" title="Connection status — click to open settings">
+          <span class="pill-dot" aria-hidden="true"></span>
+          <span data-hud="connection">Connecting…</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============================== MAIN GRID ============================== -->
+    <main class="app-grid">
+
+      <!-- ----------------------------- LEFT COLUMN ----------------------------- -->
+      <section class="col col-left">
+
+        <!-- OpenJarvis Core Status HUD -->
+        <section class="glass-panel hud-panel" data-hud-root aria-label="OpenJarvis Core Status">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">◈</span>
+            OpenJarvis Core Status
+          </h2>
+          <dl class="hud-grid">
+            <div class="hud-row">
+              <dt>Connection</dt>
+              <dd><span data-hud="connection">Connecting…</span> <span class="hud-sub mono" data-hud="latency">—</span></dd>
+            </div>
+            <div class="hud-row">
+              <dt>Endpoint</dt>
+              <dd class="mono truncate" data-hud="baseurl">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Inference Engine</dt>
+              <dd data-hud="engine">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Active Model</dt>
+              <dd class="mono" data-hud="model">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Context Window</dt>
+              <dd class="mono" data-hud="context">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Terminal Path</dt>
+              <dd class="mono truncate" data-hud="terminal">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Memory Index</dt>
+              <dd class="mono" data-hud="memory">—</dd>
+            </div>
+            <div class="hud-row">
+              <dt>Telemetry</dt>
+              <dd data-hud="source">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <!-- System Execution Safety Toggles -->
+        <section class="glass-panel" data-toggles-root aria-label="System Execution Safety Toggles">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">⛨</span>
+            Execution Safety
+          </h2>
+          <p class="panel-hint">
+            Controls which capability categories Echo offers to the agent this session.
+            Final enforcement happens inside your OpenJarvis spec.
+          </p>
+          <div class="toggle-row">
+            <div class="toggle-copy">
+              <span class="toggle-label">File Editing</span>
+              <span class="toggle-desc">Read &amp; write files via MCP filesystem tools</span>
+            </div>
+            <button class="switch" type="button" role="switch" aria-checked="false" data-toggle="fileEditing">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-copy">
+              <span class="toggle-label">Tab / App Control</span>
+              <span class="toggle-desc">Open, close, and switch applications &amp; tabs</span>
+            </div>
+            <button class="switch" type="button" role="switch" aria-checked="false" data-toggle="appTabControl">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-copy">
+              <span class="toggle-label">Shell Execution</span>
+              <span class="toggle-desc">Run shell commands on the host machine</span>
+            </div>
+            <button class="switch" type="button" role="switch" aria-checked="false" data-toggle="shellExecution">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Time & Date Hub -->
+        <section class="glass-panel chrono-panel" data-clock-root aria-label="Time and Date">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">◷</span>
+            Chronometer
+          </h2>
+          <div class="chrono-display mono">
+            <span class="chrono-digit" data-clock="hours">--</span>
+            <span class="chrono-colon">:</span>
+            <span class="chrono-digit" data-clock="minutes">--</span>
+            <span class="chrono-colon">:</span>
+            <span class="chrono-digit chrono-seconds" data-clock="seconds">--</span>
+            <span class="chrono-meridiem" data-clock="meridiem">--</span>
+          </div>
+          <div class="chrono-date" data-clock="date">—</div>
+          <div class="chrono-tz mono" data-clock="timezone">—</div>
+        </section>
+
+        <!-- Settings -->
+        <section class="glass-panel" data-settings-root aria-label="Connection Settings">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">⚙</span>
+            Connection
+          </h2>
+          <label class="field-label" for="baseUrlInput">OpenJarvis endpoint (jarvis serve)</label>
+          <div class="field-row">
+            <input id="baseUrlInput" class="field-input mono" type="text" placeholder="http://localhost:8000/v1" data-settings="baseurl" />
+            <button class="btn btn-ghost" type="button" data-settings="connect">Connect</button>
+          </div>
+          <div class="field-row field-row-tight">
+            <label class="toggle-copy small">
+              <span class="toggle-label">Voice replies</span>
+            </label>
+            <button class="switch" type="button" role="switch" aria-checked="true" data-settings="voice-toggle">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+          <label class="field-label" for="voiceSelect">Synthesizer voice</label>
+          <select id="voiceSelect" class="field-input" data-settings="voice-select">
+            <option value="">System default (male preferred)</option>
+          </select>
+        </section>
+
+      </section>
+
+      <!-- ----------------------------- CENTER COLUMN ----------------------------- -->
+      <section class="col col-center">
+
+        <!-- The Particle Orb -->
+        <section class="glass-panel orb-panel" aria-label="OpenJarvis Activity Orb">
+          <canvas data-orb-canvas class="orb-canvas"></canvas>
+          <div class="orb-overlay">
+            <span class="orb-state-label" data-orb="state-label">Idle</span>
+            <span class="orb-state-sub">OpenJarvis Core</span>
+          </div>
+        </section>
+
+        <!-- Chat / Command interface -->
+        <section class="glass-panel chat-panel" aria-label="Command Interface">
+          <div class="chat-messages" data-chat="messages"></div>
+
+          <div class="quick-actions" data-chat="quick-actions"></div>
+
+          <form class="chat-form" data-chat="form">
+            <textarea
+              class="chat-input"
+              data-chat="input"
+              rows="1"
+              placeholder="Ask OpenJarvis anything, or issue a command…"
+              aria-label="Message OpenJarvis"
+            ></textarea>
+            <button class="btn btn-primary" type="submit" data-chat="send">Send</button>
+          </form>
+        </section>
+
+      </section>
+
+      <!-- ----------------------------- RIGHT COLUMN ----------------------------- -->
+      <section class="col col-right">
+
+        <!-- Agent Control Stream -->
+        <section class="glass-panel console-panel" aria-label="Agent Control Stream">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">▤</span>
+            Agent Control Stream
+          </h2>
+          <div class="console-list" data-console="list" role="log" aria-live="polite"></div>
+        </section>
+
+        <!-- Dynamic Maps Frame -->
+        <section class="glass-panel map-panel" aria-label="Dynamic Maps Frame">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">⌖</span>
+            Geo Context
+          </h2>
+          <div class="map-canvas" data-map="canvas"></div>
+          <div class="map-meta">
+            <span data-map="label">—</span>
+            <span class="mono" data-map="coords">—</span>
+          </div>
+        </section>
+
+        <!-- Holographic Diagrams Layer -->
+        <section class="glass-panel diagram-panel" aria-label="Holographic Diagrams Layer">
+          <h2 class="panel-title">
+            <span class="panel-icon" aria-hidden="true">⌬</span>
+            Holographic Diagram
+          </h2>
+          <svg class="diagram-svg" data-diagram="svg" role="img" aria-label="System architecture diagram"></svg>
+          <div class="diagram-caption" data-diagram="caption"></div>
+        </section>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Leaflet (Dynamic Maps Frame) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <script type="module" src="./src/js/main.js"></script>
+</body>
+</html>
